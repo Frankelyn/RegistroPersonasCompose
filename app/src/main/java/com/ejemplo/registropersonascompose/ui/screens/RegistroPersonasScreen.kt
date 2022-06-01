@@ -16,51 +16,59 @@ import androidx.compose.ui.unit.dp
 
 @Composable
  fun PersonasData(name: String){
-    MaterialTheme(){
-        var txNombres by remember { mutableStateOf("") }
-        var txEmail by remember { mutableStateOf("") }
-        var txSalario by remember { mutableStateOf("") }
-        var txOcupacion by remember { mutableStateOf("") }
-        Column(
-           modifier = Modifier.padding(16.dp)
-        ) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {Text("Registro Personas")}
+            )
+        }
+    ) {
+        MaterialTheme(){
+            var txNombres by remember { mutableStateOf("") }
+            var txEmail by remember { mutableStateOf("") }
+            var txSalario by remember { mutableStateOf("") }
+            var txOcupacion by remember { mutableStateOf("") }
+            Column(
+               modifier = Modifier.padding(16.dp)
+            ) {
 
-            TextField(
-                placeholder = {Text("Nombres")},
-                value = txNombres,
-                onValueChange ={txNombres = it},
-                modifier = Modifier.padding(8.dp) )
+                TextField(
+                    placeholder = {Text("Nombres")},
+                    value = txNombres,
+                    onValueChange ={txNombres = it},
+                    modifier = Modifier.padding(8.dp) )
 
-            TextField(
-                placeholder = {Text("Email")},
-                value = txEmail,
-                onValueChange ={txEmail = it},
-                modifier = Modifier.padding(8.dp) )
+                TextField(
+                    placeholder = {Text("Email")},
+                    value = txEmail,
+                    onValueChange ={txEmail = it},
+                    modifier = Modifier.padding(8.dp) )
 
-            TextField(
-                placeholder = {Text("Salario")},
-                value = txSalario,
-                onValueChange ={txSalario = it},
-                modifier = Modifier.padding(8.dp) )
+                TextField(
+                    placeholder = {Text("Salario")},
+                    value = txSalario,
+                    onValueChange ={txSalario = it},
+                    modifier = Modifier.padding(8.dp) )
 
 
 
-            Spacer(modifier = Modifier.height(20.dp))
-             
-            Button(
-                modifier = Modifier.align(alignment = Alignment.CenterHorizontally),
-                onClick = { /*TODO*/ }) {
-                Text(text = "Guardar")
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Button(
+                    modifier = Modifier.align(alignment = Alignment.CenterHorizontally),
+                    onClick = { /*TODO*/ }) {
+                    Text(text = "Guardar")
+                }
+
+
+
+
+
             }
 
 
 
-
-
         }
-
-                
-
     }
 }
 
