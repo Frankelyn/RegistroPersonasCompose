@@ -11,10 +11,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.ejemplo.registropersonascompose.viewModel.OcupacionesViewModel
 
 @Composable
-fun OcupacionesData(navHostController: NavHostController){
+fun OcupacionesData(navHostController: NavHostController,
+                    viewModel: OcupacionesViewModel = hiltViewModel())
+{
     Scaffold(
         topBar = {
             TopAppBar(
@@ -26,7 +31,9 @@ fun OcupacionesData(navHostController: NavHostController){
             var txOcupacion by remember { mutableStateOf("") }
 
             Column(
-                modifier = Modifier.padding(it).padding(16.dp)
+                modifier = Modifier
+                    .padding(it)
+                    .padding(16.dp)
             ) {
 
                 TextField(
@@ -43,6 +50,7 @@ fun OcupacionesData(navHostController: NavHostController){
                 Button(
                     modifier = Modifier.align(alignment = Alignment.CenterHorizontally),
                     onClick = {
+                        viewModel.Guardar()
                         navHostController.navigateUp()
                     }) {
                     Text(text = "Guardar")
