@@ -5,6 +5,8 @@ import androidx.room.Room
 import com.ejemplo.registropersonascompose.data.OcupacionDao
 import com.ejemplo.registropersonascompose.data.PersonaDao
 import com.ejemplo.registropersonascompose.data.PrestamosDb
+import com.example.peopleregistercompose.data.repository.OcupacionRepository
+import com.example.peopleregistercompose.data.repository.PersonaRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,6 +36,16 @@ object AppModule {
     @Provides
     fun providesPersonaDao(prestamosDb: PrestamosDb): PersonaDao {
         return  prestamosDb.personaDao
+    }
+
+    @Provides
+    fun providesOcupacionRepository(ocupacionDao: OcupacionDao): OcupacionRepository {
+        return  OcupacionRepository(ocupacionDao)
+    }
+
+    @Provides
+    fun providesPersonaRepository(personaDao: PersonaDao): PersonaRepository {
+        return  PersonaRepository(personaDao)
     }
 
 }
