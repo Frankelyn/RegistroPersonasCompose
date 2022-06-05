@@ -1,18 +1,20 @@
 package com.ejemplo.registropersonascompose.ui.screens
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 
 @Composable
-fun OcupacionesData(name: String){
+fun OcupacionesData(navHostController: NavHostController){
     Scaffold(
         topBar = {
             TopAppBar(
@@ -24,7 +26,7 @@ fun OcupacionesData(name: String){
             var txOcupacion by remember { mutableStateOf("") }
 
             Column(
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(it).padding(16.dp)
             ) {
 
                 TextField(
@@ -40,7 +42,9 @@ fun OcupacionesData(name: String){
 
                 Button(
                     modifier = Modifier.align(alignment = Alignment.CenterHorizontally),
-                    onClick = { /*TODO*/ }) {
+                    onClick = {
+                        navHostController.navigateUp()
+                    }) {
                     Text(text = "Guardar")
                 }
 
@@ -56,9 +60,12 @@ fun OcupacionesData(name: String){
     }
 }
 
+
+
+
 @Preview(showBackground = true)
 @Composable
 fun OcupacionDataPreview(){
-    OcupacionesData(name ="Ocupaciones")
+    //OcupacionesData(navHostController = NavHostController())
 
 }

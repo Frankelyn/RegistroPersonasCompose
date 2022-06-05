@@ -1,10 +1,12 @@
 package com.ejemplo.registropersonascompose.ui.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.materialIcon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -13,9 +15,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+
+var selectedOcupacion: String? = null
 
 @Composable
- fun PersonasData(name: String){
+ fun PersonasData(navHostController: NavHostController){
+    var txNombres by remember { mutableStateOf("") }
+    var txEmail by remember { mutableStateOf("") }
+    var txSalario by remember { mutableStateOf("") }
+    val txOcupacion = listOf("Estudiante", "Ingeniero")
     Scaffold(
         topBar = {
             TopAppBar(
@@ -24,12 +34,11 @@ import androidx.compose.ui.unit.dp
         }
     ) {
         MaterialTheme(){
-            var txNombres by remember { mutableStateOf("") }
-            var txEmail by remember { mutableStateOf("") }
-            var txSalario by remember { mutableStateOf("") }
-            var txOcupacion by remember { mutableStateOf("") }
+
             Column(
-               modifier = Modifier.padding(16.dp)
+               modifier = Modifier
+                   .padding(it)
+                   .padding(16.dp)
             ) {
 
                 TextField(
@@ -43,6 +52,8 @@ import androidx.compose.ui.unit.dp
                     value = txEmail,
                     onValueChange ={txEmail = it},
                     modifier = Modifier.padding(8.dp) )
+                
+                OcupacionesSpinner(ocupacion = txOcupacion)
 
                 TextField(
                     placeholder = {Text("Salario")},
@@ -56,7 +67,9 @@ import androidx.compose.ui.unit.dp
 
                 Button(
                     modifier = Modifier.align(alignment = Alignment.CenterHorizontally),
-                    onClick = { /*TODO*/ }) {
+                    onClick = {
+                        navHostController.navigateUp()
+                    }) {
                     Text(text = "Guardar")
                 }
 
@@ -72,8 +85,48 @@ import androidx.compose.ui.unit.dp
     }
 }
 
+@Composable
+fun OcupacionesSpinner(ocupacion:List<String>){
+
+    var ocupacionText by remember{
+        mutableStateOf("")
+    }
+    var expended by remember{
+        mutableStateOf(false)
+    }
+    Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+        Row(Modifier
+            .fillMaxWidth()
+            .clickable {
+                expended = !expended
+            }
+            .padding(8.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ){
+
+            Text(text = ocupacionText, fontSize = 18.sp, modifier = Modifier.padding(end = 8.dp))
+            Icon(imageVector = Icons.Filled.ArrowDropDown, contentDescription = "")
+            DropdownMenu(expanded = expended, onDismissRequest = { expended = false}) {
+                ocupacion.forEach {
+                        ocupacion -> DropdownMenuItem(onClick = {
+
+                    expended = false
+                    ocupacionText = ocupacion.toString()
+                    selectedOcupacion = ocupacion
+                }) {
+                    Text(text = ocupacion.toString())
+                }
+                }
+
+            }
+        }
+    }
+}
+
+
 @Preview(showBackground = true)
 @Composable
 fun PersonasDataPreview(){
-    PersonasData(name = "Frankelyn")
+    //PersonasData(navHostController = NavHostController())
 }

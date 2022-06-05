@@ -13,20 +13,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 
 @Composable
-fun ListaOcupacionesData(name: String){
+fun ListaOcupacionesData(navHostController: NavHostController){
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Lista de Ocupaciones") }
             )
         }
+
     ) {
+
         MaterialTheme(){
 
             Column(
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier
+                    .padding(it)
+                    .padding(16.dp)
             ) {
 
                 val listaNombres = listOf<String>("Ing En Sistemas", "Estudiante")
@@ -40,14 +45,18 @@ fun ListaOcupacionesData(name: String){
                 Scaffold(
                     floatingActionButton = {
                         FloatingActionButton(
-                            onClick = { }
+                            onClick = {
+                                navHostController.navigate("RegistroOcupaciones")
+                            }
                         ) {
                             Icon(imageVector = Icons.Default.Add, contentDescription = null)
                         }
                     },
                     floatingActionButtonPosition = FabPosition.End
                 ) {
-
+                    Column(modifier = Modifier.padding(it)) {
+                        
+                    }
                 }
 
 
@@ -63,5 +72,5 @@ fun ListaOcupacionesData(name: String){
 @Preview(showBackground = true)
 @Composable
 fun ListaOcupacionesDataPreview(){
-    ListaOcupacionesData(name = "Frankelyn")
+    //ListaOcupacionesData())
 }

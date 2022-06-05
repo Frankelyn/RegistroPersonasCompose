@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 
 
 @Composable
@@ -21,47 +22,35 @@ fun RowItems(nombre: String) {
 }
 
 @Composable
-fun ListaPersonasData(name: String){
+fun ListaPersonasData(navHostController: NavHostController){
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Lista de Personas") }
+                title = { Text(text = "Lista de Personas")}
             )
-        }
-    ) {
-        MaterialTheme(){
-
-            Column(
-                modifier = Modifier.padding(16.dp)
-            ) {
-
-                val listaNombres = listOf<String>("Frankelyn", "Nicole", "Emilio", "Ricardo")
-
-                LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                    items(listaNombres) { nombre ->
-                        RowItems(nombre = nombre)
-                    }
-                }
-
-                Scaffold(
-                    floatingActionButton = {
-                        FloatingActionButton(
-                            onClick = { }
-                        ) {
-                            Icon(imageVector = Icons.Default.Add, contentDescription = null)
-                        }
-                    },
-                    floatingActionButtonPosition = FabPosition.End
-                ) {
-
-                }
-
-
-
+        },
+        floatingActionButton = {
+            FloatingActionButton(onClick = {
+                navHostController.navigate("RegistroPersona")
+            }) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = null)
             }
+        }
 
+    ) {
+        Column(modifier = Modifier.padding(it).padding(16.dp)) {
+            Button(onClick = {
+                navHostController.navigate("ListaDeOcupaciones")
+            }) {
+                Text(text = "Nueva Ocupación")
+            }
+            val lista = listOf("Frankelyn", "Alvaro", "Prandi", "Nicole")
 
-
+            LazyColumn(modifier = Modifier.fillMaxWidth()){
+                items(lista){
+                        nombre -> RowItems(nombre = nombre)
+                }
+            }
         }
     }
 }
@@ -69,5 +58,5 @@ fun ListaPersonasData(name: String){
 @Preview(showBackground = true)
 @Composable
 fun ListaPersonasDataPreview(){
-    ListaPersonasData(name = "Frankelyn")
+    //ListaPersonasData(navHostController = NavHostController())
 }

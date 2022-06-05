@@ -10,6 +10,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.ejemplo.registropersonascompose.ui.screens.ListaOcupacionesData
 import com.ejemplo.registropersonascompose.ui.screens.ListaPersonasData
 import com.ejemplo.registropersonascompose.ui.screens.OcupacionesData
 import com.ejemplo.registropersonascompose.ui.screens.PersonasData
@@ -19,14 +23,41 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-           // PersonasData("Registro Personas")
-            //ListaPersonasData("Lista de Personas")
-            OcupacionesData("Registro de Ocupaciones")
+           RegistroPersonasComposeTheme() {
+               MyApp()
+           }
         }
     }
-
 
 
 }
 
 
+
+ @Composable
+ fun MyApp() {
+     val navHostController = rememberNavController()
+
+     NavHost(navController = navHostController, startDestination = "ListaDePersonas"){
+         composable("ListaDeOcupaciones"){
+             ListaOcupacionesData(navHostController = navHostController)
+         }
+         composable("RegistroOcupaciones"){
+             OcupacionesData(navHostController = navHostController)
+         }
+         composable("ListaDePersonas"){
+             ListaPersonasData(navHostController = navHostController)
+         }
+         composable("RegistroPersona"){
+             PersonasData(navHostController = navHostController)
+         }
+     }
+ }
+
+@Preview(showBackground = true)
+@Composable
+fun defaultPreview(){
+    RegistroPersonasComposeTheme {
+        //MyApp()
+    }
+}
